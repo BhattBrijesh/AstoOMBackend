@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 let conn = null; // Store the connection promise
 
-const connectDB = async () => {
+const connectDB = async (url) => {
   if (conn) {
     console.log("Reusing existing MongoDB connection");
     return conn;
@@ -10,7 +10,7 @@ const connectDB = async () => {
 
   try {
     console.log("Establishing new MongoDB connection");
-    conn = await mongoose.connect(process.env.MONGOOSE_CONNECTION_URL, {
+    conn = await mongoose.connect(url, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
       serverSelectionTimeoutMS: 5000, // Timeout after 5 seconds

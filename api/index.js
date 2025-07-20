@@ -18,7 +18,7 @@ app.use(express.urlencoded({ extended: false }));
 
 // DB Connection
 
-connectDB().catch((err) =>
+connectDB(dbConnectUrl).catch((err) =>
   console.error("Failed to connect to MongoDB:", err.message)
 );
 // routes
