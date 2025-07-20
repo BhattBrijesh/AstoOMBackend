@@ -3,6 +3,7 @@ const contactUsModal = require("../models/contactUs.model");
 const {
   validateInsertContactUsDetails,
 } = require("../validators/contactUs.validator");
+const nodemailer = require("nodemailer");
 
 exports.handleAddContactUsDetails = async (req, res) => {
   try {
@@ -20,15 +21,10 @@ exports.handleAddContactUsDetails = async (req, res) => {
       message,
     });
 
-    return res.status(201).json({
-      message: "User created successfully",
-      data: insertContactDetails,
-    });
-
-    // 2. Prepare Email Options for Admin Notification
+    // Prepare Email Options for Admin Notification
     const adminMailOptions = {
-      from: process.env.EMAIL_USER, // Sender email from .env
-      to: process.env.ADMIN_RECEIVING_EMAIL, // Admin email from .env
+      from: process.env.EMAIL_USER,
+      to: process.env.ADMIN_RECEIVING_EMAIL,
       subject: "New Contact Form Submission from Your Website",
       html: `
         <h2>New Contact Form Submission</h2>
@@ -42,10 +38,10 @@ exports.handleAddContactUsDetails = async (req, res) => {
       `,
     };
 
-    // 3. Prepare Email Options for User Confirmation (Optional but Recommended)
+    // Prepare Email Options for User Confirmation
     const userMailOptions = {
-      from: process.env.EMAIL_USER, // Your sending email address
-      to: email, // The user's email address
+      from: process.env.EMAIL_USER,
+      to: email,
       subject: "Thank You for Contacting AstroOM Solution!",
       html: `
         <p>Dear ${name},</p>
@@ -58,14 +54,11 @@ exports.handleAddContactUsDetails = async (req, res) => {
       `,
     };
 
-    // 4. Send Emails
     try {
       await transporter.sendMail(adminMailOptions);
       console.log("Admin notification email sent successfully.");
     } catch (emailError) {
       console.error("Error sending email to admin:", emailError?.message);
-      // You might want to log this error but still return success to the user
-      // as the data was saved.
     }
 
     try {
@@ -78,16 +71,13 @@ exports.handleAddContactUsDetails = async (req, res) => {
       );
     }
 
-    // 5. Respond to Frontend
     return res.status(201).json({
       message: "Contact details saved and emails triggered successfully!",
       data: insertContactDetails,
     });
   } catch (error) {
     console.error("Error while inserting contact details:", error?.message);
-    return res.status(500).json({
-      message: error?.message,
-    });
+    return res.status(500).json({ message: error?.message });
   }
 };
 
