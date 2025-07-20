@@ -1,6 +1,7 @@
 require("dotenv").config();
 const express = require("express");
-const { handleDbConnection } = require("./controllers");
+const { handleDbConnection } = require("./connection");
+const { contactUsRoutes } = require("./routes/contactUs.routes");
 const app = express();
 
 // env variables
@@ -15,9 +16,8 @@ app.use(express.urlencoded({ extended: false }));
 handleDbConnection(dbConnectUrl);
 
 // routes
-app.get("/api", (req, res) => {
-  res.send("Hello World!");
-});
+// app.use("/api", contactUsRoutes);
+app.get("/", (re1, res) => res.send("hiiii"));
 
 //server
 app.listen(PORT, () => console.log(`app listening on port ${PORT}`));
