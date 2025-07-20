@@ -3,12 +3,15 @@ const express = require("express");
 const { handleDbConnection } = require("../connection");
 const { contactUsRoutes } = require("../routes/contactUs.routes");
 const app = express();
+const cors = require("cors");
 
 // env variables
 const PORT = 3000;
 
 const dbConnectUrl = process.env.MONGOOSE_CONNECTION_URL;
 
+// This allows all origins by default
+app.use(cors());
 // middleware body parser
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
