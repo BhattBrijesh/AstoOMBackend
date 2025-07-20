@@ -1,25 +1,15 @@
 const mongoose = require("mongoose");
-
-let conn = null; // Store the connection promise
-
-const connectDB = async (url) => {
-  if (conn) {
-    console.log("Reusing existing MongoDB connection");
-    return conn;
-  }
-
+exports.handleDbConnection = async (url = "") => {
   try {
-    console.log("Establishing new MongoDB connection");
-    conn = await mongoose.connect(url, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
-    console.log("MongoDB connected successfully");
-    return conn;
+    await mongoose
+      .connect(`${url}`)
+      .then(() => {
+        console.log("DB Connected Successfully");
+      })
+      .catch((error) => {
+        console.log("error while connection DB", error?.message);
+      });
   } catch (error) {
-    console.error("MongoDB connection error:", error.message);
-    throw error;
+    console.log("error while connection DB", error?.message);
   }
 };
-
-module.exports = connectDB;

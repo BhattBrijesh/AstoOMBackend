@@ -1,9 +1,10 @@
 require("dotenv").config();
 const express = require("express");
-const connectDB = require("../connection");
+
 const { contactUsRoutes } = require("../routes/contactUs.routes");
 const app = express();
 const cors = require("cors");
+const { handleDbConnection } = require("../connection");
 
 // env variables
 const PORT = 3000;
@@ -18,7 +19,7 @@ app.use(express.urlencoded({ extended: false }));
 
 // DB Connection
 
-connectDB(dbConnectUrl).catch((err) =>
+handleDbConnection(dbConnectUrl).catch((err) =>
   console.error("Failed to connect to MongoDB:", err.message)
 );
 // routes

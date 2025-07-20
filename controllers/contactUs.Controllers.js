@@ -4,20 +4,8 @@ const {
   validateInsertContactUsDetails,
 } = require("../validators/contactUs.validator");
 
-const nodemailer = require("nodemailer");
-
-// Configure Nodemailer transporter
-const transporter = nodemailer.createTransport({
-  service: "gmail",
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS,
-  },
-});
-
 exports.handleAddContactUsDetails = async (req, res) => {
   try {
-    // Validate input
     const validationErrors = validateInsertContactUsDetails(req.body);
     if (validationErrors?.length > 0) {
       return res.status(400).json({ message: validationErrors.join(", ") });
@@ -25,24 +13,22 @@ exports.handleAddContactUsDetails = async (req, res) => {
 
     const { name, email, phone, message } = req.body;
 
-    // Check MongoDB connection state
-    console.log("Mongoose connection state:", mongoose.connection.readyState);
-    if (mongoose.connection.readyState !== 1) {
-      throw new Error("MongoDB is not connected");
-    }
+    const insertContactDetails = await contactUsModal.create({
+      name,
+      phone,
+      email,
+      message,
+    });
 
-    // Insert contact details
-    console.log("Attempting to insert contact details:", req.body);
-    const insertContactDetails = await contactUsModal.create(
-      { name, phone, email, message },
-      { timeoutMs: 30000 }
-    );
-    console.log("Insert successful:", insertContactDetails);
+    return res.status(201).json({
+      message: "User created successfully",
+      data: insertContactDetails,
+    });
 
-    // Prepare email options for admin notification
+    // 2. Prepare Email Options for Admin Notification
     const adminMailOptions = {
-      from: process.env.EMAIL_USER,
-      to: process.env.ADMIN_RECEIVING_EMAIL,
+      from: process.env.EMAIL_USER, // Sender email from .env
+      to: process.env.ADMIN_RECEIVING_EMAIL, // Admin email from .env
       subject: "New Contact Form Submission from Your Website",
       html: `
         <h2>New Contact Form Submission</h2>
@@ -56,10 +42,10 @@ exports.handleAddContactUsDetails = async (req, res) => {
       `,
     };
 
-    // Prepare email options for user confirmation
+    // 3. Prepare Email Options for User Confirmation (Optional but Recommended)
     const userMailOptions = {
-      from: process.env.EMAIL_USER,
-      to: email,
+      from: process.env.EMAIL_USER, // Your sending email address
+      to: email, // The user's email address
       subject: "Thank You for Contacting AstroOM Solution!",
       html: `
         <p>Dear ${name},</p>
@@ -72,12 +58,14 @@ exports.handleAddContactUsDetails = async (req, res) => {
       `,
     };
 
-    // Send emails
+    // 4. Send Emails
     try {
       await transporter.sendMail(adminMailOptions);
       console.log("Admin notification email sent successfully.");
     } catch (emailError) {
-      console.error("Error sending email to admin:", emailError.message);
+      console.error("Error sending email to admin:", emailError?.message);
+      // You might want to log this error but still return success to the user
+      // as the data was saved.
     }
 
     try {
@@ -86,19 +74,19 @@ exports.handleAddContactUsDetails = async (req, res) => {
     } catch (emailError) {
       console.error(
         "Error sending confirmation email to user:",
-        emailError.message
+        emailError?.message
       );
     }
 
-    // Send response to frontend
+    // 5. Respond to Frontend
     return res.status(201).json({
       message: "Contact details saved and emails triggered successfully!",
       data: insertContactDetails,
     });
   } catch (error) {
-    console.error("Error while inserting contact details:", error.message);
+    console.error("Error while inserting contact details:", error?.message);
     return res.status(500).json({
-      message: "Internal server error: " + error.message,
+      message: error?.message,
     });
   }
 };
