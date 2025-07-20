@@ -3,7 +3,7 @@ const contactUsModal = require("../models/contactUs.model");
 const {
   validateInsertContactUsDetails,
 } = require("../validators/contactUs.validator");
-const nodemailer = require("nodemailer");
+const transporter = require("../config/nodemailer");
 
 exports.handleAddContactUsDetails = async (req, res) => {
   try {
