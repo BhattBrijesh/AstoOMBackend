@@ -1,15 +1,27 @@
 const mongoose = require("mongoose");
-exports.handleDbConnection = async (url = "") => {
+
+let conn = null; // Store the connection promise
+
+const connectDB = async () => {
+  if (conn) {
+    console.log("Reusing existing MongoDB connection");
+    return conn;
+  }
+
   try {
-    await mongoose
-      .connect(`${url}`)
-      .then(() => {
-        console.log("DB Connected Successfully");
-      })
-      .catch((error) => {
-        console.log("error while connection DB", error?.message);
-      });
+    console.log("Establishing new MongoDB connection");
+    conn = await mongoose.connect(process.env.MONGOOSE_CONNECTION_URL, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      serverSelectionTimeoutMS: 5000, // Timeout after 5 seconds
+      connectTimeoutMS: 10000, // Connection timeout
+    });
+    console.log("MongoDB connected successfully");
+    return conn;
   } catch (error) {
-    console.log("error while connection DB", error?.message);
+    console.error("MongoDB connection error:", error.message);
+    throw error;
   }
 };
+
+module.exports = connectDB;
