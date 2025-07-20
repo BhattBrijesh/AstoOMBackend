@@ -5,7 +5,8 @@ const { contactUsRoutes } = require("./routes/contactUs.routes");
 const app = express();
 
 // env variables
-const PORT = process.env.PORT;
+const PORT = 3000;
+
 const dbConnectUrl = process.env.MONGOOSE_CONNECTION_URL;
 
 // middleware body parser
@@ -16,8 +17,7 @@ app.use(express.urlencoded({ extended: false }));
 handleDbConnection(dbConnectUrl);
 
 // routes
-// app.use("/api", contactUsRoutes);
-app.get("/", (re1, res) => res.send("hiiii"));
+app.use("/api", contactUsRoutes);
 
 //server
 app.listen(PORT, () => console.log(`app listening on port ${PORT}`));

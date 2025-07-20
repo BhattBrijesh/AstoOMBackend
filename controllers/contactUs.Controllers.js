@@ -25,9 +25,9 @@ exports.handleAddContactUsDetails = async (req, res) => {
       data: insertContactDetails,
     });
   } catch (error) {
-    console.error("Error while inserting contact details:", error);
+    console.error("Error while inserting contact details:", error?.message);
     return res.status(500).json({
-      message: "Internal server error",
+      message: error?.message,
     });
   }
 };
@@ -44,7 +44,7 @@ exports.handleGetContactUsDetails = async (req, res) => {
     console.error("Error fetching contact details:", error);
 
     return res.status(500).json({
-      message: "Internal server error",
+      message: error?.message,
     });
   }
 };
