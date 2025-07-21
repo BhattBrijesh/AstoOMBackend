@@ -2,6 +2,8 @@ require("dotenv").config();
 const express = require("express");
 
 const { contactUsRoutes } = require("../routes/contactUs.routes");
+const { InquiryRoutes } = require("../routes/Inquiry.routes");
+
 const app = express();
 const cors = require("cors");
 const { handleDbConnection } = require("../connection");
@@ -24,6 +26,7 @@ handleDbConnection(dbConnectUrl).catch((err) =>
 );
 // routes
 app.use("/api", contactUsRoutes);
+app.use("/api", InquiryRoutes);
 
 //server
 app.listen(PORT, () => console.log(`app listening on port ${PORT}`));
