@@ -23,7 +23,7 @@ exports.handleAddInquiryDetails = async (req, res) => {
       subject,
       message,
     });
-
+    const totalCount = await contactUsModal.countDocuments();
     // Prepare Email Options for Admin Notification
     const adminMailOptions = {
       from: process.env.EMAIL_USER,
@@ -79,6 +79,7 @@ exports.handleAddInquiryDetails = async (req, res) => {
     return res.status(201).json({
       message: "Inquiry details saved and emails triggered successfully!",
       data: insertInquiryDetails,
+      totalCount,
     });
   } catch (error) {
     console.error("Error while inserting Inquiry details:", error?.message);
@@ -89,10 +90,11 @@ exports.handleAddInquiryDetails = async (req, res) => {
 exports.handleGetInquiryDetails = async (req, res) => {
   try {
     const getAllDetails = await InquiryModal.find();
-
+    const totalCount = getAllDetails.length;
     return res.status(200).json({
       message: "Users fetched successfully",
       data: getAllDetails || [],
+      totalCount,
     });
   } catch (error) {
     console.error("Error fetching contact details:", error);
