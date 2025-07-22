@@ -10,7 +10,6 @@ exports.validateInsertInquiryDetails = (data) => {
 
   if (!name.trim()) {
     errors.push("Name is required");
-    console.log("name", name);
   }
 
   if (!phone.trim()) {

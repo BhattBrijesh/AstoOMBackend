@@ -4,11 +4,10 @@ const {
   validateInsertInquiryDetails,
 } = require("../validators/Inquiry.validator");
 const transporter = require("../config/nodemailer");
+const moment = require("moment-timezone");
 
 exports.handleAddInquiryDetails = async (req, res) => {
   try {
-    console.log("req", req.body);
-
     const validationErrors = validateInsertInquiryDetails(req.body);
     if (validationErrors?.length > 0) {
       return res.status(400).json({ message: validationErrors.join(", ") });
@@ -25,6 +24,9 @@ exports.handleAddInquiryDetails = async (req, res) => {
     });
     const totalCount = await contactUsModal.countDocuments();
     // Prepare Email Options for Admin Notification
+    const receivedDateIST = moment()
+      .tz("Asia/Kolkata")
+      .format("DD-MM-YYYY hh:mm:ss A");
     const adminMailOptions = {
       from: process.env.EMAIL_USER,
       to: process.env.ADMIN_RECEIVING_EMAIL,
@@ -38,7 +40,7 @@ exports.handleAddInquiryDetails = async (req, res) => {
         <p><strong>Message:</strong></p>
         <p>${message}</p>
         <br>
-        <small>Received on: ${new Date().toLocaleString()}</small>
+        <small>Received on: ${receivedDateIST}</small>
       `,
     };
 
@@ -89,7 +91,7 @@ exports.handleAddInquiryDetails = async (req, res) => {
 
 exports.handleGetInquiryDetails = async (req, res) => {
   try {
-    const getAllDetails = await InquiryModal.find();
+    const getAllDetails = await InquiryModal.find().sort({ createdAt: -1 });
     const totalCount = getAllDetails.length;
     return res.status(200).json({
       message: "Users fetched successfully",

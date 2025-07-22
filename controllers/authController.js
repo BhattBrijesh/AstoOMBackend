@@ -21,7 +21,6 @@ exports.register = async (req, res) => {
     // Create and save new user
     user = new User({ email, password, status: "active" }); // Explicitly set status (optional, since default is "active")
     await user.save();
-    console.log("User created:", user.email, "Status:", user.status);
 
     // Generate JWT
     const payload = { id: user.id };
