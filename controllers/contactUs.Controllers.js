@@ -6,6 +6,7 @@ const {
 const transporter = require("../config/nodemailer");
 
 exports.handleAddContactUsDetails = async (req, res) => {
+  debugger;
   try {
     const validationErrors = validateInsertContactUsDetails(req.body);
     if (validationErrors?.length > 0) {
@@ -20,7 +21,7 @@ exports.handleAddContactUsDetails = async (req, res) => {
       email,
       message,
     });
-
+    const totalCount = await contactUsModal.countDocuments();
     // Prepare Email Options for Admin Notification
     const adminMailOptions = {
       from: process.env.EMAIL_USER,
@@ -74,6 +75,7 @@ exports.handleAddContactUsDetails = async (req, res) => {
     return res.status(201).json({
       message: "Contact details saved and emails triggered successfully!",
       data: insertContactDetails,
+      totalCount,
     });
   } catch (error) {
     console.error("Error while inserting contact details:", error?.message);
@@ -84,10 +86,12 @@ exports.handleAddContactUsDetails = async (req, res) => {
 exports.handleGetContactUsDetails = async (req, res) => {
   try {
     const getAllDetails = await contactUsModal.find();
+    const totalCount = getAllDetails.length;
 
     return res.status(200).json({
       message: "Users fetched successfully",
       data: getAllDetails || [],
+      totalCount,
     });
   } catch (error) {
     console.error("Error fetching contact details:", error);
