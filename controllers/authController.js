@@ -19,9 +19,9 @@ exports.register = async (req, res) => {
     }
 
     // Create and save new user
-    user = new User({ email, password });
+    user = new User({ email, password, status: "active" }); // Explicitly set status (optional, since default is "active")
     await user.save();
-    console.log("User created:", user.email);
+    console.log("User created:", user.email, "Status:", user.status);
 
     // Generate JWT
     const payload = { id: user.id };
@@ -33,6 +33,7 @@ exports.register = async (req, res) => {
     const userResponse = {
       id: user.id,
       email: user.email,
+      status: user.status, // Include status in response
     };
 
     res.status(201).json({ token, user: userResponse });
@@ -74,6 +75,7 @@ exports.login = async (req, res) => {
     const userResponse = {
       id: user.id,
       email: user.email,
+      status: user.status, // Include status in response
     };
 
     res.json({ token, user: userResponse });
