@@ -22,7 +22,7 @@ exports.handleAddInquiryDetails = async (req, res) => {
       subject,
       message,
     });
-    const totalCount = await contactUsModal.countDocuments();
+    const totalCount = await InquiryModal.countDocuments();
     // Prepare Email Options for Admin Notification
     const receivedDateIST = moment()
       .tz("Asia/Kolkata")
