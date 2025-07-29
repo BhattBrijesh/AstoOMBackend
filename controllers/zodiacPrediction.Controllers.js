@@ -16,6 +16,8 @@ async function zodiacPrediction(req, res) {
 
     return res.status(200).json({
       message: "zodiac Prediction fetched successfully",
+      isSuccess: true,
+      statusCode: 200,
       data: getZodiacPrediction?.data?.data || [],
     });
   } catch (error) {
