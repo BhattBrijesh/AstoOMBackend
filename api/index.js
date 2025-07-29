@@ -8,6 +8,7 @@ const authRoutes = require("../routes/auth");
 const app = express();
 const cors = require("cors");
 const { handleDbConnection } = require("../connection");
+const { ZodiacRoutes } = require("../routes/zodiacPredication.routes");
 
 // env variables
 const PORT = 3000;
@@ -28,6 +29,7 @@ handleDbConnection(dbConnectUrl, app, PORT).catch((err) =>
 // routes
 app.use("/api", contactUsRoutes);
 app.use("/api", InquiryRoutes);
+app.use("/api", ZodiacRoutes);
 app.use("/api/auth", authRoutes);
 
 //server
