@@ -102,12 +102,12 @@ exports.handleAddInquiryDetails = async (req, res) => {
         <body>
           <div class="container">
             <div class="header">
-              <h1>Thank You for Contacting AstroOM Solution!</h1>
+              <h1>Thank You for Contacting Om Astro Solutions!</h1>
             </div>
             <div class="content">
               <p class="greeting">Dear ${name},</p>
               
-              <p>Thank you for reaching out to us. We have successfully received your inquiry and truly appreciate your interest in AstroOM Solution.</p>
+              <p>Thank you for reaching out to us. We have successfully received your inquiry and truly appreciate your interest in Om Astro Solutions.</p>
               
               <p>Our team will review your message carefully and get back to you <strong>within 24-48 hours</strong>.</p>
               
@@ -120,7 +120,7 @@ exports.handleAddInquiryDetails = async (req, res) => {
               
               <p>If your query is urgent, feel free to reach out to us directly using the contact details below.</p>
               
-              <p class="signature">Best regards,<br>The AstroOM Solution Team</p>
+              <p class="signature">Best regards,<br>The Om Astr0 SolutionS Team</p>
             </div>
             
             <div class="footer">
@@ -130,18 +130,19 @@ exports.handleAddInquiryDetails = async (req, res) => {
                 
                 <p>
                   WhatsApp: 
-                  <a href="https://wa.me/9417339708?text=Hello%20AstroOM%20Solution,%20I%20have%20a%20query" class="whatsapp-btn">
+                  <a href="https://wa.me/9417339708?text=Hello%20OM%20Astro%20Solutions,%20I%20have%20a%20query" class="whatsapp-btn">
                     💬 Chat on WhatsApp (+91 9417339708)
                   </a>
                 </p>
                 
                 <p><strong>Office Address:</strong><br>
                   OM Astro Solutions<br>
-                  House Number 20 Sector 11 Chandigarh
+                  House Number 20 Sector 11 Chandigarh <br>
+                  India
                 </p>
               </div>
               <p style="margin-top: 25px; font-size: 13px; color: #999;">
-                © ${new Date().getFullYear()} AstroOM Solution. All rights reserved.
+                © ${new Date().getFullYear()} Om Astro Solutions. All rights reserved.
               </p>
             </div>
           </div>
