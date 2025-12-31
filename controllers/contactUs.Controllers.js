@@ -136,7 +136,6 @@ exports.handleAddContactUsDetails = async (req, res) => {
                 
                 <p><strong>Office Address:</strong><br>
                   Om Astro Solutions<br>
-                  OM Astro Solutions<br>
                   House Number 20 Sector 11 Chandigarh <br>
                   India
                 </p>
