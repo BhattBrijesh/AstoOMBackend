@@ -120,7 +120,7 @@ exports.handleAddInquiryDetails = async (req, res) => {
               
               <p>If your query is urgent, feel free to reach out to us directly using the contact details below.</p>
               
-              <p class="signature">Best regards,<br>The Om Astr0 SolutionS Team</p>
+              <p class="signature">Best regards,<br>The Om Astro SolutionS Team</p>
             </div>
             
             <div class="footer">
