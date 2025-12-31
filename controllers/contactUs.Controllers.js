@@ -125,11 +125,12 @@ exports.handleAddContactUsDetails = async (req, res) => {
                 
                 <p>
                   WhatsApp: 
-                <p>
-  WhatsApp: 
-  <a href="https://wa.me/919417339708?text=Hello%20OM%20Astro%20Solutions,%20I%20want%20to%20contact%20you" class="whatsapp-btn">
+                   <a href="https://wa.me/919417339708?text=Hello%20OM%20Astro%20Solutions,%20I%20want%20to%20contact%20you" class="whatsapp-btn">
     💬 Chat on WhatsApp (+91 94173 39708)
   </a>
+                <p>
+ 
+ 
 </p>
                 </p>
                 
