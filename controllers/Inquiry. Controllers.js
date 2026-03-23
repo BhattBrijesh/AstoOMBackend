@@ -126,7 +126,7 @@ exports.handleAddInquiryDetails = async (req, res) => {
             <div class="footer">
               <div class="contact-info">
                 <p><strong>Connect with us directly:</strong></p>
-                <p>Email: <a href="mailto:astroomsolution@gmail.com">astroomsolution@gmail.com</a></p>
+                <p>Email: <a href="mailto:om.astro28@gmail.com">om.astro28@gmail.com</a></p>
                 
                 <p>
                   WhatsApp: 
@@ -163,7 +163,7 @@ exports.handleAddInquiryDetails = async (req, res) => {
     } catch (emailError) {
       console.error(
         "Error sending confirmation email to user:",
-        emailError?.message
+        emailError?.message,
       );
     }
 
