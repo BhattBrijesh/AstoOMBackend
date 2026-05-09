@@ -2,6 +2,9 @@
 
 A scalable backend API built with **Node.js** and **Express.js** for the AstoOM astrology platform. This project powers the frontend application with secure authentication, business APIs, astrologer services, and third-party integrations such as zodiac/rashi data services.
 
+🚀 Live Demo
+https://www.omastrosolutions.com/
+
 ## 🚀 Features
 
 * RESTful API architecture
